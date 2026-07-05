@@ -1,14 +1,5 @@
 export type PinKey = "from" | "to";
 
-export interface Station {
-  name: string;
-  lat: number;
-  lon: number;
-  distanceMeters: number;
-  endpoint: string;
-  kind: string;
-}
-
 export interface Pin {
   lat: number;
   lon: number;

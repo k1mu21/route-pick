@@ -6,7 +6,7 @@ interface Props {
   index: number;
 }
 
-export function JourneyCard({ journey: j, index }: Props) {
+export function JourneyCard({ journey: j, index }: Readonly<Props>) {
   return (
     <div className="card">
       <h3>ルート{index + 1}　{fmtDur(j.durationSecs)}・乗換{j.transferCount}回</h3>
