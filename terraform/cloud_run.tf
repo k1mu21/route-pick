@@ -13,6 +13,8 @@ resource "google_cloud_run_v2_service" "route_pick" {
       }
 
       resources {
+        # リクエスト処理中のみCPUを割り当てる（256Miは常時割り当てだと不可）
+        cpu_idle = true
         limits = {
           cpu    = "1"
           memory = "256Mi"
