@@ -7,20 +7,19 @@ import { useJourneys } from "./queries.ts";
 /** ピン設置 → 経路検索、のアプリケーション状態と操作をまとめたフック */
 export function useRoutePick() {
   const markersRef = useRef(new MarkerStore());
-  const nextRef = useRef<PinKey>("from");
+  // いま選択中のピン。地図クリックはこのピンだけを動かす
+  const [active, setActive] = useState<PinKey>("from");
   const [pins, setPins] = useState<Record<PinKey, Pin | null>>({ from: null, to: null });
   // 「経路を検索」を押した時点のピンペア。これをキーに useJourneys が走る
   const [searchPair, setSearchPair] = useState<{ from: Pin; to: Pin } | null>(null);
 
   const journeys = useJourneys(searchPair);
 
-  /** 地図クリック時: 出発→到着の順にピンを置く */
+  /** 地図クリック時: 選択中のピンを置き直す */
   const placePin = useCallback((map: maplibregl.Map, lat: number, lng: number) => {
-    const key = nextRef.current;
-    nextRef.current = key === "from" ? "to" : "from";
-    markersRef.current.setPin(map, key, lat, lng);
-    setPins((p) => ({ ...p, [key]: { lat, lon: lng } }));
-  }, []);
+    markersRef.current.setPin(map, active, lat, lng);
+    setPins((p) => ({ ...p, [active]: { lat, lon: lng } }));
+  }, [active]);
 
   const canSearch = !!(pins.from && pins.to) && !journeys.isFetching;
 
@@ -28,5 +27,5 @@ export function useRoutePick() {
     if (pins.from && pins.to) setSearchPair({ from: pins.from, to: pins.to });
   }, [pins]);
 
-  return { pins, journeys, canSearch, search, placePin };
+  return { pins, active, setActive, journeys, canSearch, search, placePin };
 }
