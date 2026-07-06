@@ -8,7 +8,7 @@ on:
 env:
   SERVICE: route-pick
   REGION: ${{ vars.GCP_REGION || 'asia-northeast1' }}
-  PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+  PROJECT_ID: ${{ vars.GCP_PROJECT_ID || 'route-pick-501614' }}
 
 jobs:
   deploy:
@@ -21,10 +21,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # キーレス認証（Workload Identity Federation）。terraform apply の出力値を
+      # GitHub Variables の GCP_WIF_PROVIDER / GCP_SA_EMAIL に設定する
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.GCP_SA_KEY }}
+          workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
+          service_account: ${{ vars.GCP_SA_EMAIL }}
 
       - name: Set up gcloud
         uses: google-github-actions/setup-gcloud@v2
