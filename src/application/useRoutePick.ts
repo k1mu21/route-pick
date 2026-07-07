@@ -2,7 +2,7 @@ import { useCallback, useRef, useState } from "react";
 import type maplibregl from "maplibre-gl";
 import type { Pin, PinKey } from "../domain/types.ts";
 import { MarkerStore } from "../infrastructure/map/markers.ts";
-import { useJourneys } from "./queries.ts";
+import { type PinPair, useJourneys } from "./queries.ts";
 
 /** ピン設置 → 経路検索、のアプリケーション状態と操作をまとめたフック */
 export function useRoutePick() {
@@ -11,7 +11,7 @@ export function useRoutePick() {
   const [active, setActive] = useState<PinKey>("from");
   const [pins, setPins] = useState<Record<PinKey, Pin | null>>({ from: null, to: null });
   // 「経路を検索」を押した時点のピンペア。これをキーに useJourneys が走る
-  const [searchPair, setSearchPair] = useState<{ from: Pin; to: Pin } | null>(null);
+  const [searchPair, setSearchPair] = useState<PinPair | null>(null);
 
   const journeys = useJourneys(searchPair);
 
