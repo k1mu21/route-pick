@@ -9,6 +9,7 @@ h1 { font-size: 18px; margin: 0 0 8px; }
 .pin-info.active { border-color: #2f6bff; box-shadow: 0 0 0 2px rgba(47, 107, 255, 0.2); }
 .selecting { float: right; font-size: 11px; color: #2f6bff; font-weight: 600; }
 .pin-info b { display: inline-block; width: 3.5em; }
+.distance { font-size: 13px; color: #445; }
 .search-btn { width: 100%; padding: 10px; font-size: 15px; border: 0; border-radius: 8px; background: #2f6bff; color: #fff; cursor: pointer; margin: 8px 0 16px; }
 .search-btn:disabled { background: #aab; cursor: default; }
 .card { background: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 12px; margin-bottom: 12px; }

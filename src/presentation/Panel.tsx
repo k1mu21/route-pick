@@ -1,4 +1,5 @@
 import type { Journey, Pin, PinKey } from "../domain/types.ts";
+import { distanceKm, fmtDistance } from "../domain/geo.ts";
 import { PinInfo } from "./PinInfo.tsx";
 import { JourneyCard } from "./JourneyCard.tsx";
 
@@ -26,6 +27,9 @@ export function Panel(
       </div>
       <PinInfo pin={pins.from} label="出発" active={active === "from"} onSelect={() => onSelect("from")} />
       <PinInfo pin={pins.to} label="到着" active={active === "to"} onSelect={() => onSelect("to")} />
+      {pins.from && pins.to && (
+        <div className="distance">直線距離: 約{fmtDistance(distanceKm(pins.from, pins.to))}</div>
+      )}
       <button type="button" className="search-btn" disabled={!canSearch} onClick={onSearch}>
         経路を検索
       </button>
