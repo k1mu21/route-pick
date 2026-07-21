@@ -9,9 +9,14 @@ interface Props {
 
 export function PinInfo({ pin, label, active, onSelect }: Readonly<Props>) {
   return (
-    <div className={"pin-info" + (active ? " active" : "")} onClick={onSelect}>
+    <button
+      type="button"
+      className={active ? "pin-info active" : "pin-info"}
+      onClick={onSelect}
+      aria-pressed={active}
+    >
       <b>{label}:</b> {pin ? `${pin.lat.toFixed(5)}, ${pin.lon.toFixed(5)}` : "未設定"}
       {active && <span className="selecting">選択中</span>}
-    </div>
+    </button>
   );
 }

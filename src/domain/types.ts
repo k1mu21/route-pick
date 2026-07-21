@@ -5,17 +5,26 @@ export interface Pin {
   lon: number;
 }
 
-export interface Leg {
-  kind: "transit" | "walk";
+interface LegBase {
+  departureSecs: number;
+  arrivalSecs: number;
+  durationSecs?: number;
+}
+
+export interface TransitLeg extends LegBase {
+  kind: "transit";
   routeName?: string;
   headsign?: string;
   color?: string;
   from?: { name: string };
   to?: { name: string };
-  departureSecs: number;
-  arrivalSecs: number;
-  durationSecs?: number;
 }
+
+export interface WalkLeg extends LegBase {
+  kind: "walk";
+}
+
+export type Leg = TransitLeg | WalkLeg;
 
 export interface Journey {
   durationSecs: number;

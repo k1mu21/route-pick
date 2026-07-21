@@ -12,7 +12,9 @@ export default function App() {
         pins={pins}
         active={active}
         onSelect={setActive}
-        journeys={journeys}
+        journeys={journeys.data}
+        isSearching={journeys.isFetching}
+        errorMessage={journeys.error?.message ?? null}
         canSearch={canSearch}
         onSearch={search}
       />
